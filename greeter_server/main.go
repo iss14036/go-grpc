@@ -1,12 +1,13 @@
 package main
 
-import(
+import (
 	"context"
 	"log"
 	"net"
 
-	"go-grpc/api/proto/v1"
-	pb "go-grpc/api/proto/v1/"
+	pb "go-grpc/api/proto/v1"
+
+	"google.golang.org/grpc"
 )
 
 const (
@@ -16,12 +17,12 @@ const (
 //server is used to imolement helloworld.GreeterServer.
 type server struct{}
 
-func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pp.HelloReply, error){
-	log.printf("Receieved: %c", in.Name)
+func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
+	log.Printf("Receieved: %c", in.Name)
 	return &pb.HelloReply{Message: "Hello " + in.Name}, nil
 }
 
-func main(){
+func main() {
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
@@ -32,4 +33,3 @@ func main(){
 		log.Fatalf("failed to serve: %v", err)
 	}
 }
-

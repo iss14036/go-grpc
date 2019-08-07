@@ -6,12 +6,13 @@ import (
 	"os"
 	"time"
 
-	"google.golang.org/grpc"
 	pb "go-grpc/api/proto/v1"
+
+	"google.golang.org/grpc"
 )
 
 const (
-	address = "localhost:50051"
+	address     = "localhost:50051"
 	defaultName = "world"
 )
 
@@ -29,7 +30,7 @@ func main() {
 	if len(os.Args) > 1 {
 		name = os.Args[1]
 	}
-	ctx, cancel := context.WithTimeOut(context.Background(), time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: name})
 	if err != nil {
@@ -37,5 +38,3 @@ func main() {
 	}
 	log.Printf("Greeting: %s", r.Message)
 }
-
-
